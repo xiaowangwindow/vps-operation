@@ -139,8 +139,5 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-#/s_kompass/spiders/parse_kompass.py
-#/s_kompass/spiders/kompass_activity_sectors.py
-#/s_kompass/spiders/kompass.py
-#/s_kompass/spiders/test.html
-crawls/
+config_release.py
+fabfile.py

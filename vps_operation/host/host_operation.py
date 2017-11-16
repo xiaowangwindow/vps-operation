@@ -1,13 +1,10 @@
 
-from fabric.api import run, put, cd, env, sudo
+from fabric.api import sudo
 from fabric.decorators import roles
 
-env.roledefs = {
-    'all_host': []
-}
 
-@roles('all_host')
 def init_host():
+    sudo('apt-get update')
     sudo('apt-get -y install software-properties-common python-software-properties')
     sudo('add-apt-repository \
         "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
@@ -25,8 +22,10 @@ def init_host():
 
     # docker
     sudo('apt-get -y install \
-     linux-image-extra-$(uname -r) \
      linux-image-extra-virtual')
+    # sudo('apt-get -y install \
+    #  linux-image-extra-$(uname -r) \
+    #  linux-image-extra-virtual')
     sudo('apt-get -y install \
      apt-transport-https \
      ca-certificates \
@@ -45,3 +44,9 @@ def init_host():
     sudo('echo "export LC_ALL=C" >> ~/.bashrc')
     sudo('echo "alias g=\'ps aux|grep\'" >> ~/.bashrc')
     sudo('echo "alias f=\'tailf\'" >> ~/.bashrc')
+
+def update_etc_hosts(content):
+    sudo('printf "{}" >> /etc/hosts'.format(content))
+
+def run_command(command, use_sudo=True):
+    run(command, use_sudo=use_sudo)
